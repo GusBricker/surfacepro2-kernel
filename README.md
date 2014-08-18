@@ -2,6 +2,7 @@ surfacepro2-kernel
 ==================
 
 This kernel has a few fixes for bluetooth and type/touch cover detection. It has only been tested on the Surface Pro 2.
+All the work is done in the surfacepro2 branch. It is currently based off the v3.16 tag.
 
 ## To Build
 
