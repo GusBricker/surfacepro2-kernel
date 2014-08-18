@@ -702,6 +702,15 @@ static void hid_scan_collection(struct hid_parser *parser, unsigned type)
 	if (((parser->global.usage_page << 16) == HID_UP_SENSOR) &&
 	    type == HID_COLLECTION_PHYSICAL)
 		hid->group = HID_GROUP_SENSOR_HUB;
+
+   /*
+    * Handle vendor specific handlings
+    */
+   if ((hid->vendor == USB_VENDOR_ID_MICROSOFT) &&
+       (hid->product == USB_DEVICE_ID_MS_TYPE_COVER_2 ||
+        hid->product == USB_DEVICE_ID_MS_TOUCH_COVER_2)
+       && (hid->group == HID_GROUP_MULTITOUCH))
+           hid->group = HID_GROUP_GENERIC;
 }
 
 static int hid_scan_main(struct hid_parser *parser, struct hid_item *item)
