@@ -1,14 +1,14 @@
-SURFACE PRO 2 LINUX KERNEL
-==========================
+surfacepro2-kernel
+==================
 
 This kernel has a few fixes for bluetooth and type/touch cover detection. It has only been tested on the Surface Pro 2.
 
 ## To Build
 
-git clone https://github.com/GusBricker/surfacepro2-kernel.git
-git checkout surfacepro2
-sudo su
-make-kpkg -j `getconf _NPROCESSORS_ONLN` --initrd --append-to-version=-surfacepro2 kernel_image kernel_headers kernel_source
+1. git clone https://github.com/GusBricker/surfacepro2-kernel.git
+2. git checkout surfacepro2
+3. sudo su
+4. make-kpkg -j `getconf _NPROCESSORS_ONLN` --initrd --append-to-version=-surfacepro2 kernel_image kernel_headers kernel_source
 
 ## Manual Install
 
