@@ -50,6 +50,7 @@ static struct usb_driver btusb_driver;
 #define BTUSB_ATH3012		0x80
 #define BTUSB_INTEL		0x100
 #define BTUSB_BCM_PATCHRAM	0x200
+#define BTUSB_MWIFIEX       0x400
 
 static const struct usb_device_id btusb_table[] = {
 	/* Generic Bluetooth USB device */
@@ -236,6 +237,9 @@ static const struct usb_device_id blacklist_table[] = {
 	/* Intel Bluetooth device */
 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL },
 	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL },
+
+	/* Marvell 8797 - mwifiex-usb composite wifi+bt device */
+	{ USB_DEVICE(0x1286, 0x2044), .driver_info = BTUSB_MWIFIEX },
 
 	{ }	/* Terminating entry */
 };
@@ -1640,6 +1644,11 @@ static int btusb_probe(struct usb_interface *intf,
 
 	if (id->driver_info & BTUSB_INTEL)
 		hdev->setup = btusb_setup_intel;
+
+	if (id->driver_info & BTUSB_MWIFIEX) {
+		printk(KERN_INFO KBUILD_MODNAME ": mwifiex bt detected, disabling usb autosuspend\n");
+		usb_disable_autosuspend(data->udev);
+	}
 
 	/* Interface numbers are hardcoded in the specification */
 	data->isoc = usb_ifnum_to_if(data->udev, 1);
